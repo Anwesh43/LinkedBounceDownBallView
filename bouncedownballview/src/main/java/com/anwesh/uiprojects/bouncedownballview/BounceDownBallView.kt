@@ -35,7 +35,7 @@ fun Canvas.drawBDBNode(i : Int, scale : Float, paint : Paint) {
 
 }
 
-class BoundDownBallView(ctx : Context) : View(ctx) {
+class BounceDownBallView(ctx : Context) : View(ctx) {
 
     private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
@@ -163,6 +163,27 @@ class BoundDownBallView(ctx : Context) : View(ctx) {
         fun startUpdating(cb : () -> Unit) {
             curr.startUpdating(cb)
         }
+    }
 
+    data class Renderer(var view : BounceDownBallView) {
+
+        private val animator : Animator = Animator(view)
+        private val bdb : BounceDownBall = BounceDownBall(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#BDBDBD"))
+            bdb.draw(canvas, paint)
+            animator.animate {
+                bdb.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            bdb.startUpdating {
+                animator.start()
+            }
+        }
     }
 }
