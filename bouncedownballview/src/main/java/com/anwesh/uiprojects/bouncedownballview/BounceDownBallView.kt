@@ -4,6 +4,7 @@ package com.anwesh.uiprojects.bouncedownballview
  * Created by anweshmishra on 05/09/18.
  */
 
+import android.app.Activity
 import android.view.View
 import android.view.MotionEvent
 import android.graphics.Canvas
@@ -186,6 +187,14 @@ class BounceDownBallView(ctx : Context) : View(ctx) {
             bdb.startUpdating {
                 animator.start()
             }
+        }
+    }
+
+    companion object {
+        fun create(activity : Activity) : BounceDownBallView {
+            val view : BounceDownBallView = BounceDownBallView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 }
