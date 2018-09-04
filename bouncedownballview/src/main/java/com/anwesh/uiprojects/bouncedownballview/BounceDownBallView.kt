@@ -11,6 +11,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 
 val nodes : Int = 5
 
@@ -25,7 +26,8 @@ fun Canvas.drawBDBNode(i : Int, scale : Float, paint : Paint) {
     val origX : Float = xGap/2 + xGap * (i) + xGap / 2
     val origY : Float = r
     val dy : Float = h - r
-    val dx1 : Float = r
+    val dx1 : Float = (w - r) * (i % 2) + (r) * ((i + 1) % 2)
+    Log.d("dx", "${i}:${dx1}:(${w - r}, ${r})")
     val y : Float = origY + (dy - origY) * scale
     val x : Float = origX + (dx1 - origX) * (sc1 - sc2)
     save()
