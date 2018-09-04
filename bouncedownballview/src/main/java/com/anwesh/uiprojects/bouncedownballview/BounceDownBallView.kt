@@ -9,8 +9,31 @@ import android.view.MotionEvent
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.content.Context
+import android.graphics.Color
 
 val nodes : Int = 5
+
+fun Canvas.drawBDBNode(i : Int, scale : Float, paint : Paint) {
+    paint.color = Color.parseColor("#0277BD")
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    val sc1 : Float = Math.min(0.5f, scale) * 2
+    val sc2 : Float = Math.min(0.5f, Math.max(0f, scale - 0.5f)) * 2
+    val xGap : Float = (w * 0.9f) / (nodes + 1)
+    val r : Float = xGap / 4
+    val origX : Float = 0.05f * w + xGap * i + xGap / 2
+    val origY : Float = r
+    val dy : Float = h - r
+    val dx1 : Float = w/2
+    val dx2 : Float = w - r
+    val y : Float = origY + (dy - origY) * scale
+    val x : Float = origX + (dx1 - origX) * sc1 + (dx2 - dx1) * sc2
+    save()
+    translate(x, y)
+    drawCircle(x, y, r, paint)
+    restore()
+
+}
 
 class BoundDownBallView(ctx : Context) : View(ctx) {
 
